@@ -1,4 +1,3 @@
-
 public class Display {
 
     private String name;
@@ -11,6 +10,7 @@ public class Display {
         this.items = new Products[displayType.getTier()][displayType.getSlot()];
     }
 
+    // Note: put Tier and Slots in constructor instead of manually inputting next version of the code.
     public String getName() {
         return this.name;
     }
@@ -64,4 +64,26 @@ public class Display {
         return itemToBeRemoved;
     }
 
+    public void viewProductsInDisplay() { // For-each loops would've worked better, I just realized 30 minutes after.
+        Products[][] productsInDisplay = getItems();
+        int slots = getType().getSlot();
+        int tier = getType().getTier();
+
+        System.out.print("Display " + getName() + ":");
+        System.out.println();
+
+        for (int i = 0; i < tier; i++) {
+            for (int j = 0; j < slots; j++) {
+                Products product = productsInDisplay[i][j];
+                if (product != null) {
+                    System.out.print("[" + product.getName() + "] " + (i + 1) + ", " + (j + 1) + "\t");
+                } else {
+                    System.out.print("[ ]\t");
+                }
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+    }
 }
