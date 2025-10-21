@@ -22,6 +22,7 @@ public class driver {
 
         // SHOPPER CREATION
         System.out.print("Name: ");
+
         String name = scanner.nextLine();
 
         System.out.print("Age: ");
@@ -30,19 +31,44 @@ public class driver {
         Shopper shopper = new Shopper(name, age);
 
         // MAIN MENU
-        System.out.println();
-        System.out.println("Welcome, " + shopper.getName() + "!");
-        System.out.println("You are: " + shopper.getAge() + " years old.");
-        System.out.println();
+        String response; // Outside due to while loop.
+        do {
+            System.out.println();
+            System.out.println("Welcome, " + shopper.getName() + "!");
+            System.out.println("You are: " + shopper.getAge() + " years old.");
+            System.out.println();
 
-        if (shopper.getIsMinor()) {
-            System.out.println("Shoppers under 18 are not allowed to buy ALCOHOLIC beverages and CLEANING AGENTS.");
+            if (shopper.getIsMinor()) {
+                System.out.println("Shoppers under 18 are not allowed to buy ALCOHOLIC beverages and CLEANING AGENTS.");
+                System.out.println();
+            } else if (shopper.getDiscounted()) {
+                System.out.println("Shoppers over age 60 are eligible for Senior Citizen's Discount! FOOD products: 20% off, BEVERAGE products: 10% off.");
+                System.out.println();
+            }
+            System.out.println("Please enjoy your stay!");
             System.out.println();
-        } else if (shopper.getDiscounted()) {
-            System.out.println("Shoppers over age 60 are eligible for Senior Citizen's Discount! FOOD products: 20% off, BEVERAGE products: 10% off.");
-            System.out.println();
-        }
-        System.out.println("Please enjoy your stay!");
+            System.out.println("MAIN MENU: ");
+            System.out.println("[X] Check Current Displays and their Products (Debugging)");
+            System.out.println("[Y] Start");
+            System.out.println("[Z] Exit");
+
+            response = scanner.nextLine().toLowerCase();
+
+            switch (response) {
+                case "x":
+                    checkAllDisplaysAndItems(displays);
+
+                    break;
+                case "y":
+
+                    break;
+                default:
+                    if (!response.equalsIgnoreCase("z")) {
+                        System.out.println("Invalid input");
+                    }
+                    break;
+            }
+        } while (!response.equalsIgnoreCase("z"));
 
         scanner.close();
     }
@@ -198,6 +224,12 @@ public class driver {
         display7.itemInsert(softdrink1, 4, 2);
     }
 
+    private static void checkAllDisplaysAndItems(ArrayList<Display> displays) {
+        for (Display display : displays) {
+            display.viewProductsInDisplay();
+        }
+    }
+
     // INITIALIZATION OF DISPLAYS - Other notes are found in different Model Classes
     // Note 1: Ask Sir Alex if this is a smart way to instantiate the Product Types
     // My reasoning: I wanted to create a clear instantiation of all the products, displays, display types, and product types.
@@ -205,3 +237,4 @@ public class driver {
     // Note 4: BUT THIS IS A SIMULATION, technically, in OOP-enterprise level, the "manager" is the one to put objects in via "add" methods, but this is just a mock.
     // Note 7: ALRIGHT, creating a higher tier class to keep all memories. 
 }
+
